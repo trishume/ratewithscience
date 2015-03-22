@@ -98,8 +98,12 @@ document.getElementById("go").addEventListener("click", function() {
     show(document.getElementById("loading"));
     setTimeout(function() {
         $.ajax({
-            url: "data.txt",
+            url: "/api/findscale",
             type: "GET",
+            data: {
+              start: $("#start").val() || "david hasselhoff",
+              stop: $("#end").val() || "eiffel tower"
+            },
             dataType: "json",
             success: function(result) {
                 if (result.status == "ok") {

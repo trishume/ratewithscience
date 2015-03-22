@@ -8,10 +8,10 @@ class WikiProc
   end
   def find_path(start,endpoint)
     raise "No params" unless start && endpoint
-    @stdin.puts "#{start}|#{endpoint}"
+    @stdin.puts "#{start.downcase}|#{endpoint.downcase}"
     res = get_res
     return nil unless res[0]=="path"
-    res[1..-1]
+    res[1..-1].map(&:capitalize)
   end
   def get_res
     while !@stdout.eof?
@@ -33,7 +33,7 @@ class MyApp < Sinatra::Base
   get '/api/findscale' do
     path = settings.wikifinder.find_path(params[:start],params[:stop])
     return {status: "fail"}.to_json unless path
-    {status: "ok", path: path}.to_json
+    {status: "ok", scale: path}.to_json
   end
 
   run! if app_file == $0
