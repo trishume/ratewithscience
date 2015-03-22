@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rate with Science</title>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    </head>
+    <body>
+        <section id="title">
+            <div class="wrapper">
+                <h1>Rate with <span class="accented animated infinite flash">science</span></h1>
+            </div>
+        </section>
+        <section id="header">
+            <div class="wrapper">
+                <div class="inputs">
+                    <label>Make me a scale from</label>
+                    <input type="text" id="start" value="" placeholder="David Hasselhoff"><div class="bg"><div class="suggestion" id="suggestion_start"></div></div>
+
+                    <label id="clear">to</label>
+                    <input type="text" id="end" value="" placeholder="Eiffel Tower"><div class="bg"><div class="suggestion" id="suggestion_end"></div></div>
+
+                    <input type="button" id="go" value="Go">
+                </div>
+            </div>
+        </section>
+
+        <section id="loading" class="hidden">
+            <div class="wrapper">
+                <img src="spinner.gif">
+            </div>
+        </section>
+
+        <section id="error" class="hidden">
+            <div class="wrapper">
+                <h2>Uh oh!</h2>
+                <p>We couldn't make a scale with your input. Try some other endpoints!</p>
+                <input type="button" id="close_error" value="Try again">
+            </div>
+        </section>
+
+        <section id="results" class="hidden">
+            <div class="wrapper">
+                <div id="scale">
+                </div>
+                <input type="button" id="again" value="Again?">
+            </div>
+        </section>
+
+        <section id="footer">
+            <div class="wrapper">
+                Made with <span class="heart">&hearts;</span> by <a href="http://thume.ca/">Tristan</a> and <a href="http://davepagurek.com">Dave</a>
+            </div>
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript" src="rws.js"></script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{
+    "status": "ok",
+    "scale": [
+        "David Hasselhoff",
+        "Baltimore, Maryland",
+        "United States of America",
+        "United Nations",
+        "Africa",
+        "Europe",
+        "Germany",
+        "France",
+        "Paris",
+        "Eiffel Tower"
+    ]
+
+}
