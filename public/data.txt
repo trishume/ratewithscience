@@ -1,5 +1,6 @@
 {
     "status": "ok",
+    "quality": 2,
     "scale": [
         "David Hasselhoff",
         "Baltimore, Maryland",

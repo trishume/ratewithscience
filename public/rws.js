@@ -101,6 +101,7 @@ document.getElementById("go").addEventListener("click", function() {
     setTimeout(function() {
         $.ajax({
             url: "/api/findscale",
+            //url: "data.txt",
             type: "GET",
             data: {
               start: ($("#start").val()==""?"david hasselhoff":$("#start").val()),
@@ -110,6 +111,10 @@ document.getElementById("go").addEventListener("click", function() {
             success: function(result) {
                 if (result.status == "ok") {
                     var scale = document.getElementById("scale");
+                    scale.classList.remove("quality");
+                    if (result.quality && result.quality == 2) {
+                        scale.classList.add("quality");
+                    }
                     scale.innerHTML = "";
                     for (var i=0; i<result.scale.length; i++) {
                         var item = "<div class='item'><h3>" + (i+1) + "</h3>"

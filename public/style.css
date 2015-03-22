@@ -161,12 +161,17 @@ input[type="text"]:focus+.bg>.suggestion.open {
     background-color:#0B0F4D;
 }
 
+#results .wrapper {
+    position:relative;
+}
+
 #scale {
     margin-left:21px;
     border-left: 2px dotted #FFF;
     line-height:38px;
     margin-bottom:40px;
 }
+
 
 #scale .item h3 {
     display:inline-block;
@@ -182,6 +187,36 @@ input[type="text"]:focus+.bg>.suggestion.open {
     margin-right:20px;
     margin-top:0;
     margin-bottom:10px;
+}
+@-webkit-keyframes sparkle {
+    0%, 50%, 100% {
+        box-shadow: 0 0 0 #FFF;
+    }
+
+    25%, 75% {
+        box-shadow: 0 0 10px #FFF;
+    }
+}
+
+@keyframes sparkle {
+    0%, 50%, 100% {
+        box-shadow: 0 0 0 #FFF;
+    }
+
+    25%, 75% {
+        box-shadow: 0 0 10px #FFF;
+    }
+}
+#scale.quality .item h3 {
+    border-color: transparent;
+    -webkit-animation-name: sparkle;
+    animation-name: sparkle;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 }
 
 #scale .item:last-child h3 {
@@ -292,3 +327,5 @@ input[type="text"]:focus+.bg>.suggestion.open {
     -webkit-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
 }
+
+
