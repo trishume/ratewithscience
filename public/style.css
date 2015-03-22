@@ -51,12 +51,12 @@ h1 {
     font-weight: lighter;
     font-size: 80px;
     margin: 10px 0;
+    padding:0;
 }
 
-
-h1 {
-    font-weight: lighter;
-    font-size: 80px;
+h2 {
+    font-weight:lighter;
+    font-size: 25px;
 }
 
 .wrapper {
@@ -112,7 +112,7 @@ input[type="text"] {
     transition:all 0.4s ease;
     position:relative;
     z-index:2;
-    width:220px;
+    width:270px;
 }
 
 .suggestion {
@@ -135,8 +135,8 @@ input[type="text"]+.bg {
     position:relative;
     z-index:1;
     transition: all 0.2s ease;
-    width:230px;
-    margin-left:-230px;
+    width:280px;
+    margin-left:-280px;
     margin-bottom:-12px;
 }
 
@@ -259,21 +259,21 @@ input[type="text"]:focus+.bg>.suggestion.open {
 
 @-webkit-keyframes flash {
     0%, 50%, 100% {
-        color: #FFF;
+        text-shadow: 0 0 0 #FFF;
     }
 
     25%, 75% {
-        color:#FFC4FE;
+        text-shadow: 0 0 10px #FFF;
     }
 }
 
 @keyframes flash {
     0%, 50%, 100% {
-        color: #FFF;
+        text-shadow: 0 0 0 #FFF;
     }
 
     25%, 75% {
-        color:#EBA0E6;
+        text-shadow: 0 0 10px #FFF;
     }
 }
 

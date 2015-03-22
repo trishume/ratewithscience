@@ -113,7 +113,7 @@ document.getElementById("go").addEventListener("click", function() {
                     scale.innerHTML = "";
                     for (var i=0; i<result.scale.length; i++) {
                         var item = "<div class='item'><h3>" + (i+1) + "</h3>"
-                        item += "<a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(result.scale[i]) + "'>" + result.scale[i] + "</a>"
+                        item += "<a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(result.scale[i]) + "' target='_blanl'>" + result.scale[i] + "</a>"
                         item += "<div class='bg'></div>";
                         item += "</div>";
                         scale.innerHTML += item;
