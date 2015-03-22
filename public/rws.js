@@ -76,8 +76,10 @@ Array.prototype.forEach.call(document.querySelectorAll("input[type='text']"), fu
     }, 200));
 
     element.addEventListener("keydown", function(event) {
-        if (event.keyCode == TAB || event.keyCode == ENTER) {
+        if (event.keyCode == TAB) {
             element.value = suggestion.innerHTML;
+        } else if (event.keyCode == ENTER) {
+            document.getElementById("go").click();
         }
     });
 });
@@ -101,8 +103,8 @@ document.getElementById("go").addEventListener("click", function() {
             url: "/api/findscale",
             type: "GET",
             data: {
-              start: $("#start").val() || "david hasselhoff",
-              stop: $("#end").val() || "eiffel tower"
+              start: ($("#start").val()==""?"david hasselhoff":$("#start").val()),
+              stop: ($("#end").val()==""?"eiffel tower":$("#end").val())
             },
             dataType: "json",
             success: function(result) {
