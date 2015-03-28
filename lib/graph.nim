@@ -1,4 +1,4 @@
-import sequtils, queues, db_sqlite, strutils
+import sequtils, queues, db_sqlite, strutils, algorithm
 
 type
   Graph* = seq[int32]
@@ -74,6 +74,7 @@ proc shortest_path(g : var Graph, start : Page,
   while cur_page != start:
     cur_page = g.user_data(cur_page)
     path.add(cur_page)
+  reverse(path)
   return path
 
 proc clear_marks(g : var Graph) =
@@ -93,13 +94,13 @@ proc find_path(g : var Graph, start : Page,
   return (path: @[], bid: false, worked: false)
 
 proc title_to_page(m : Mapper, title : string) : Page =
-  let r = m.getRow(titleToIdQuery,title)
+  let r = m.getRow(titleToIdQuery,title.toLower())
   if r[0] == "": return 0
   return parseInt(r[0]).int32
 proc page_to_title(m : Mapper, p : Page) : string =
   let r = m.getRow(idToTitleQuery,p)
   if r[0] == "": return ""
-  return r[0]
+  return r[0].capitalize()
 
 proc find_path_s*(g : var Graph, m : Mapper,
                  start : string, stop : string) : PathSRes =
@@ -114,7 +115,7 @@ proc find_path_s*(g : var Graph, m : Mapper,
   return (path: path_s, bid: res.bid, worked: true)
 
 proc init_mapper*() : Mapper =
-  open("data/index.db","","","")
+  open("data/xindex.db","","","")
 
 when isMainModule:
   var data = load_bin_graph()
