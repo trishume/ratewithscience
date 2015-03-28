@@ -30,11 +30,10 @@ proc load_bin_graph*() : Graph =
   defer: close(f)
   let size : int = getFileSize(f).int
   let count = size /% 4
-  let buf = createU(int32,count)
-  defer: free(buf)
-  discard readBuffer(f,cast[pointer](buf),size)
-  # convert to seq
-  var s = toSeq(iterPtr(buf,count))
+  var s : seq[int32]
+  newSeq(s, count)
+  shallow(s)
+  discard readBuffer(f,addr(s[0]),size)
   return s
 
 iterator graph_links(g : Graph, p : Page, field : int32) : Page =
