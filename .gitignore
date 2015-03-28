@@ -1,3 +1,5 @@
 .tern-port
 server
 nimcache
+data
+lib/graph
