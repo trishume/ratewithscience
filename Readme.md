@@ -4,8 +4,10 @@ A web app for finding a rating scale between two arbitrary things.
 Ever wanted to rate something on a scale of David Hasselhoff to the Eiffel Tower? Well now you can.
 
 [Dave Pagurek](http://davepagurek.com/) and I made this for the [TerribleHack Winter 2015](http://terriblehack.website/) hackathon. I wrote the backend, Dave wrote the frontend.
+I later rewrote the backend in [Nim](http://nim-lang.org/) to make it cleaner and easier to deploy.
 
-Some time I will put up a public version but for now here's a screenshot:
+Try it out at [http://ratewith.science](http://ratewith.science)!
+
 ![Screenshot](http://imgur.com/8df1Ujy.png)
 
 ## How It Works
