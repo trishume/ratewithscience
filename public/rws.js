@@ -104,8 +104,8 @@ document.getElementById("go").addEventListener("click", function() {
             //url: "data.txt",
             type: "GET",
             data: {
-              start: ($("#start").val()==""?"david hasselhoff":$("#start").val()),
-              stop: ($("#end").val()==""?"eiffel tower":$("#end").val())
+              start: ($("#start").val()==""?"David Hasselhoff":$("#start").val()),
+              stop: ($("#end").val()==""?"Eiffel Tower":$("#end").val())
             },
             dataType: "json",
             success: function(result) {

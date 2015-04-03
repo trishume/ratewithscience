@@ -1,5 +1,5 @@
 # example.nim
-import jester/jester, asyncdispatch, json, sequtils, locks
+import jester/jester, asyncdispatch, json, sequtils, locks,times
 import lib/graph
 
 var
@@ -14,18 +14,18 @@ routes:
     let start = request.params["start"]
     let stop = request.params["stop"]
     echo "Pathing..."
+    var t0 = cpuTime()
     acquire mutex
     var res = find_path_s(g,mapper,start,stop)
     release mutex
-    echo "Done Pathing..."
-    if not res.worked: resp "{\"scale\":\"bad\"}"
-    # let path = @["hi"]
-    let path = res.path
-    let pathj = %mapIt(path,JsonNode, %it)
-    # let q = 1
-    let q = if res.bid: 2 else: 1
-    resp "{\"status\":\"ok\", \"scale\": "& $pathj &", \"quality\": "& $q &"}"
-    # resp "Hello World"
+    echo "Done pathing, took: ", cpuTime() - t0
+    if not res.worked:
+      resp "{\"scale\":\"bad\"}"
+    else:
+      let path = res.path
+      let pathj = %mapIt(path,JsonNode, %it)
+      let q = if res.bid: 2 else: 1
+      resp "{\"status\":\"ok\", \"scale\": "& $pathj &", \"quality\": "& $q &"}"
 
 initLock mutex
 echo "Loading..."

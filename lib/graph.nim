@@ -15,7 +15,7 @@ const
   kFirstPageIndex = 4
 
 let
-  titleToIdQuery = sql"SELECT offset FROM pages WHERE title = ? LIMIT 1"
+  titleToIdQuery = sql"SELECT offset FROM pages WHERE title = ? COLLATE NOCASE LIMIT 1"
   idToTitleQuery = sql"SELECT title FROM pages WHERE offset = ? LIMIT 1"
 
 proc offset*[A](some: ptr A; b: int): ptr A =
@@ -93,22 +93,25 @@ proc find_path(g : var Graph, start : Page,
   return (path: @[], bid: false, worked: false)
 
 proc title_to_page(m : Mapper, title : string) : Page =
-  let r = m.getRow(titleToIdQuery,title.toLower())
+  let r = m.getRow(titleToIdQuery,title)
   if r[0] == "": return 0
   return parseInt(r[0]).int32
 proc page_to_title(m : Mapper, p : Page) : string =
   let r = m.getRow(idToTitleQuery,p)
   if r[0] == "": return ""
-  return r[0].capitalize()
+  return r[0]
 
 proc find_path_s*(g : var Graph, m : Mapper,
                  start : string, stop : string) : PathSRes =
   let p1 = m.title_to_page(start)
   let p2 = m.title_to_page(stop)
+  echo start, "->", stop,"      ",p1,"->",p2
   if p1 == 0 or p2 == 0:
+    echo "Fail1"
     return (path: @[], bid: false, worked: false)
   let res = g.find_path(p1,p2)
   if not res.worked:
+    echo "Fail2"
     return (path: @[], bid: false, worked: false)
   let path_s = mapIt(res.path,string,page_to_title(m,it))
   return (path: path_s, bid: res.bid, worked: true)
