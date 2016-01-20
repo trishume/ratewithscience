@@ -1,15 +1,19 @@
-import std.stdio;
-import std.path;
-import std.file;
-import std.algorithm;
+import std.stdio, std.path, std.file, std.algorithm, std.array, std.range;
 import d2sqlite3;
 import gfm.core.queue;
 
 alias Page = uint;
 
+enum PathStatus {
+  NoPath,
+  BadStart,
+  BadStop,
+  Bidirectional,
+  Unidirectional
+}
+
 struct Path {
-  bool worked;
-  bool bidirectional;
+  PathStatus status;
   string[] path;
 }
 
@@ -61,7 +65,7 @@ class Graph {
     struct AllPageRange {
       uint[] g;
       uint i;
-      bool empty() { return i < g.length; }
+      bool empty() { return i >= g.length; }
       Page front() { return i*4; }
       void popFront() { i += pageHeaderSize+g[i+pageLinksField]; }
     }
@@ -108,11 +112,32 @@ class Graph {
     clearMarks();
     return path;
   }
+
+  Path pathResult(Page start, Page stop, uint lenField = pageBidLinksField) {
+    Page[] pages = shortestPath(start, stop, lenField);
+    PathStatus status = (lenField == pageBidLinksField) ? PathStatus.Bidirectional : PathStatus.Unidirectional;
+    if(pages.length == 0) status = PathStatus.NoPath;
+    return Path(status, pages.map!(p => pageToTitle(p)).array());
+  }
+
+  // the not-at-all-patented ratewith.science algorithm
+  Path rateWithScience(string start, string stop) {
+    Page p1 = titleToPage(start);
+    if(p1 == 0) return Path(PathStatus.BadStart, []);
+    Page p2 = titleToPage(stop);
+    if(p2 == 0) return Path(PathStatus.BadStop, []);
+    Path bidPath = pathResult(p1, p2, pageBidLinksField);
+    if(bidPath.status == PathStatus.Bidirectional) return bidPath;
+    Path uniPath = pathResult(p1, p2, pageLinksField);
+    return uniPath;
+  }
 }
 
 unittest {
   import dunit.toolkit;
   auto g = new Graph("data");
+
+  writeln("Number of pages: ", g.allPages().walkLength());
 
   Page p = g.titleToPage("alphabet");
   string title = g.pageToTitle(p);
@@ -120,7 +145,9 @@ unittest {
 
   Page p1 = g.titleToPage("David Hasselhoff");
   Page p2 = g.titleToPage("Eiffel Tower");
-  auto path = g.shortestPath(p1,p2);
+  auto path = g.pathResult(p1,p2);
   writeln(path);
-  writeln(path.map!(p => g.pageToTitle(p)));
+
+  writeln(g.rateWithScience("Bicycle", "Eiffel Tower"));
+  writeln(g.rateWithScience("Bicycle", "Pickles"));
 }
