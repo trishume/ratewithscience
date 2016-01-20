@@ -1,0 +1,8 @@
+{
+	"name": "ratewithscience",
+	"description": "The backend for http://ratewith.science/",
+	"copyright": "Copyright © 2016, Tristan Hume",
+	"authors": ["Tristan Hume"],
+	"dependencies": {
+	}
+}
