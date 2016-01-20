@@ -1,4 +1,8 @@
 {
 	"fileVersion": 1,
-	"versions": {}
+	"versions": {
+		"d2sqlite3": "0.9.0",
+		"gfm": "3.0.11",
+		"dunit": "1.0.12"
+	}
 }
