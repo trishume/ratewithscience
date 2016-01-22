@@ -51,15 +51,13 @@ Also all the paths are hard coded absolute paths to the various component projec
 
 ## How To Use It Yourself
 
-Due to me using this as an experiment in trying out new experimental languages, this isn't that easy to deploy. But trust me it's easier with the new Nim version than the old Rust version.
+Due to me using this as an experiment in trying out new experimental languages, this isn't that easy to deploy. But trust me it's easier with the new D version than the Nim or Rust versions.
 Steps:
-- Generate or get a hold of some [wikicrush][] data, either running it yourself or using the versions I will eventually publish...
-- Install the latest [Nim development version](https://github.com/Araq/Nim), jester segfaults on anything else. I use 165619552a7ad0fa4f594963ee0441dd711edfd4
+- Generate or get a hold of some [wikicrush][] data, either running it yourself or using the version linked from the Readme.
+- Install a D compiler and [Dub](http://code.dlang.org/getting_started).
 - Clone `ratewithscience`
-- Clone the latest [Jester][] into a `jester` folder in the `ratewithscience` directory, I use cb54165b211bab0f1d67f90b978ed47d9f908343
 - Symlink the [wikicrush][] `data` folder into the `ratewithscience` directory. Technically it only needs `xindex.db` and `indexbi.bin`
-- Run `rake release` to compile a release build
-- Run `./server` to start the server
+- Run `dub run` to compile and start the server, or `dub build` to build a binary
 
 [wikicrush]: https://github.com/trishume/wikicrush
 [Jester]: https://github.com/dom96/jester
