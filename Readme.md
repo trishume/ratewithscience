@@ -4,7 +4,7 @@ A web app for finding a rating scale between two arbitrary things.
 Ever wanted to rate something on a scale of David Hasselhoff to the Eiffel Tower? Well now you can.
 
 [Dave Pagurek](http://davepagurek.com/) and I made this for the [TerribleHack Winter 2015](http://terriblehack.website/) hackathon. I wrote the backend, Dave wrote the frontend.
-I later rewrote the backend in [Nim](http://nim-lang.org/) to make it cleaner and easier to deploy.
+I later rewrote the backend in [Nim](http://nim-lang.org/) and then [D](http://dlang.org) to make it cleaner and easier to deploy as well as learn new languages.
 
 Try it out at [http://ratewith.science](http://ratewith.science)!
 
@@ -21,15 +21,23 @@ Dave's JS sends my backend two endpoints via AJAX and my backend gives back a li
 ## The Current Tech
 
 The frontend is written in static HTML and JS with CSS3 animations and properties for extra fancy design.
-The backend was recently rewritten in [Nim](http://nim-lang.org/) by Tristan as a way of learning the language and make the whole thing less hacky than the old Rust version was.
+The backend is currently written in [D](http://dlang.org/), which is the third compiled language I (Tristan) have written the same thing in.
+Now I have a nice comparison corpus of having implemented the exact same app in Rust, Nim and D. It is a great way to try out a language.
 
-The Nim backend uses the [Jester][] web framework to serve Dave's frontend as well
-as respond to API calls for path finding.
+The D backend uses the [Vibe.d][] web framework to serve Dave's frontend as well
+as respond to API calls for path finding. It was a mostly straightforward translation of the Nim version, but a bit nicer.
 
 First the backend translates the given pages into something usable with the binary graph using the [wikicrush][] `xindex.db` file with Nim's standard Sqlite library.
 The backend then performs a breadth-first-search on an in-memory buffer of the [wikicrush][] `indexbi.bin` file.
 It first tries to BFS through only bidirectional links as these lead to better paths but if that fails it tries a single-direction search.
 Then it uses the Sqlite database to translate the path offsets it got back into article names and ships them back to the frontend as JSON.
+
+The JSON API is generated using [Vibe.d's fancy REST generator][https://vibed.org/api/vibe.web.rest/].
+
+## The Nim Tech
+
+The first rewrite was done in [Nim](http://nim-lang.org/) by Tristan as a way of learning the language and make the whole thing less hacky than the old Rust version was.
+The Nim backend used the [Jester][] web framework to serve Dave's frontend as well as respond to API calls for path finding.
 
 ## The Original Tech (From the Hackathon)
 The backend uses a compiled Rust binary from the [ratews_backend](https://github.com/trishume/ratews_backend) project to find a path.
@@ -55,3 +63,5 @@ Steps:
 
 [wikicrush]: https://github.com/trishume/wikicrush
 [Jester]: https://github.com/dom96/jester
+[Vibe.d]: https://vibed.org/
+[d2sqlite3]: https://github.com/biozic/d2sqlite3
