@@ -1,13 +1,15 @@
 {
-	"name": "ratewithscience",
-	"description": "The backend for http://ratewith.science/",
-	"copyright": "Copyright © 2016, Tristan Hume",
-	"authors": ["Tristan Hume"],
+  "name": "ratewithscience",
+  "description": "The backend for http://ratewith.science/",
+  "copyright": "Copyright © 2016, Tristan Hume",
+  "authors": ["Tristan Hume"],
   "libs": ["sqlite3"],
   "lflags": ["-L/usr/local/Cellar/sqlite/3.8.10.2/lib/"],
-	"dependencies": {
+  "dependencies": {
     "d2sqlite3": "~>0.9.0",
     "dunit": "~>1.0.10",
-    "gfm:core": "~>3.0.11"
-	}
+    "gfm:core": "~>3.0.11",
+    "vibe-d": "~>0.7.26"
+  },
+  "versions": ["VibeDefaultMain"]
 }
