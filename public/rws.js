@@ -109,7 +109,7 @@ document.getElementById("go").addEventListener("click", function() {
             },
             dataType: "json",
             success: function(result) {
-                if (result.status > 2) {
+                if (result.status > 2) { // success
                     var scale = document.getElementById("scale");
                     scale.classList.remove("quality");
                     if (result.status == 3) {
@@ -126,6 +126,14 @@ document.getElementById("go").addEventListener("click", function() {
                     hide(document.getElementById("loading"));
                     show(document.getElementById("results"));
                 } else {
+                    var errorMsgEl = document.getElementById("errormsg");
+                    if(result.status == 0) {
+                        errorMsgEl.innerHTML = "There's no path between these pages! This is super rare, you must be good at finding obscure pages.";
+                    } else if(result.status == 1) {
+                        errorMsgEl.innerHTML = "I can't find a Wikipedia page for your start point. This might be because I can't currently use redirects as endpoints.";
+                    } else if(result.status == 2) {
+                        errorMsgEl.innerHTML = "I can't find a Wikipedia page for your end point. This might be because I can't currently use redirects as endpoints.";
+                    }
                     hide(document.getElementById("loading"));
                     show(document.getElementById("error"));
                 }
