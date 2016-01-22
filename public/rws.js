@@ -109,16 +109,16 @@ document.getElementById("go").addEventListener("click", function() {
             },
             dataType: "json",
             success: function(result) {
-                if (result.status == "ok") {
+                if (result.status > 2) { // success
                     var scale = document.getElementById("scale");
                     scale.classList.remove("quality");
-                    if (result.quality && result.quality == 2) {
+                    if (result.status == 3) {
                         scale.classList.add("quality");
                     }
                     scale.innerHTML = "";
-                    for (var i=0; i<result.scale.length; i++) {
+                    for (var i=0; i<result.path.length; i++) {
                         var item = "<div class='item'><h3>" + (i+1) + "</h3>"
-                        item += "<a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(result.scale[i]) + "' target='_blanl'>" + result.scale[i] + "</a>"
+                        item += "<a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(result.path[i]) + "' target='_blanl'>" + result.path[i] + "</a>"
                         item += "<div class='bg'></div>";
                         item += "</div>";
                         scale.innerHTML += item;
@@ -126,6 +126,14 @@ document.getElementById("go").addEventListener("click", function() {
                     hide(document.getElementById("loading"));
                     show(document.getElementById("results"));
                 } else {
+                    var errorMsgEl = document.getElementById("errormsg");
+                    if(result.status == 0) {
+                        errorMsgEl.innerHTML = "There's no path between these pages! This is super rare, you must be good at finding obscure pages.";
+                    } else if(result.status == 1) {
+                        errorMsgEl.innerHTML = "I can't find a Wikipedia page for your start point. This might be because I can't currently use redirects as endpoints.";
+                    } else if(result.status == 2) {
+                        errorMsgEl.innerHTML = "I can't find a Wikipedia page for your end point. This might be because I can't currently use redirects as endpoints.";
+                    }
                     hide(document.getElementById("loading"));
                     show(document.getElementById("error"));
                 }

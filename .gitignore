@@ -1,6 +1,8 @@
-.tern-port
-server
-nimcache
 data
-lib/graph
-jester
+.dub
+docs.json
+__dummy.html
+*.o
+*.obj
+ratewithscience
+__test__library__
