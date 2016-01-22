@@ -1,17 +1,12 @@
-import std.stdio;
+import std.stdio, std.datetime;
 import vibe.d;
 import graph;
 
 Graph wikiGraph;
+TaskMutex mtx;
 
 @path("/api")
 interface Api {
-  //struct Result {
-  //  string status;
-  //  string[] scale;
-  //  int quality;
-  //}
-
   @path("findscale")
   graph.Path getFindScale(string start, string stop);
 }
@@ -19,17 +14,20 @@ interface Api {
 class ApiImpl : Api {
   override:
   graph.Path getFindScale(string start, string stop) {
-    return wikiGraph.rateWithScience(start, stop);
+    StopWatch sw = StopWatch(AutoStart.yes);
+    writeln("Pathing from ", start, " to ", stop);
+    mtx.lock();
+    auto res = wikiGraph.rateWithScience(start, stop);
+    mtx.unlock();
+    sw.stop();
+    writeln("Done pathing with result", res, " it took ", sw.peek().msecs, "ms");
+    return res;
   }
-}
-
-void findScale(HTTPServerRequest req, HTTPServerResponse res) {
-  enforceHTTP("start" in req.form, HTTPStatus.badRequest, "Missing start field.");
-  enforceHTTP("stop" in req.form, HTTPStatus.badRequest, "Missing stop field.");
 }
 
 shared static this() {
   wikiGraph = new Graph("data");
+  mtx = new TaskMutex;
 
   auto router = new URLRouter;
   router.registerRestInterface(new ApiImpl());
