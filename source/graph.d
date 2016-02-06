@@ -1,4 +1,4 @@
-import std.stdio, std.path, std.file, std.algorithm, std.array, std.range;
+import std.stdio, std.path, std.file, std.algorithm, std.array, std.range, std.datetime;
 import d2sqlite3;
 import gfm.core.queue;
 
@@ -122,13 +122,18 @@ class Graph {
 
   // the not-at-all-patented ratewith.science algorithm
   Path rateWithScience(string start, string stop) {
+    StopWatch sw = StopWatch(AutoStart.yes);
     Page p1 = titleToPage(start);
+    writeln("Done first page lookup at ", sw.peek().msecs, "ms");
     if(p1 == 0) return Path(PathStatus.BadStart, []);
     Page p2 = titleToPage(stop);
+    writeln("Done second page lookup at ", sw.peek().msecs, "ms");
     if(p2 == 0) return Path(PathStatus.BadStop, []);
     Path bidPath = pathResult(p1, p2, pageBidLinksField);
+    writeln("Done bidirectional pathing at ", sw.peek().msecs, "ms");
     if(bidPath.status == PathStatus.Bidirectional) return bidPath;
     Path uniPath = pathResult(p1, p2, pageLinksField);
+    writeln("Done unidirectional pathing at ", sw.peek().msecs, "ms");
     return uniPath;
   }
 }
