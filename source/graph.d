@@ -28,7 +28,7 @@ class Graph {
   enum firstPageIndex = 4;
 
   this(string dataFolder) {
-    db = Database(buildPath(dataFolder, "xindex.db"));
+    db = Database(buildPath(dataFolder, "xindex-nocase.db"));
     writeln("Loading binary graph...");
     g = cast(Page[])read(buildPath(dataFolder, "indexbi.bin"));
     writefln("Loaded %d ints", g.length);
