@@ -24,7 +24,7 @@ class Graph {
   enum pageUserDataField = 0;
   enum pageLinksField = 1;
   enum pageBidLinksField = 2;
-  enum pageHeaderSize = 3;
+  enum pageHeaderSize = 4;
   enum firstPageIndex = 4;
 
   this(string dataFolder) {

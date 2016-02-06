@@ -53,7 +53,7 @@ Also all the paths are hard coded absolute paths to the various component projec
 
 Due to me using this as an experiment in trying out new experimental languages, this isn't that easy to deploy. But trust me it's easier with the new D version than the Nim or Rust versions.
 Steps:
-- Generate or get a hold of some [wikicrush][] data, either running it yourself or using the version linked from the Readme.
+- Generate or get a hold of some [wikicrush][] data, either running it yourself or using the version linked from the Readme. Note: this newest version uses the newer data file format from wikicrush, the downloads may not be recent enough, I'm working on this.
 - Install a D compiler and [Dub](http://code.dlang.org/getting_started).
 - Clone `ratewithscience`
 - Symlink the [wikicrush][] `data` folder into the `ratewithscience` directory. Technically it only needs `xindex.db` and `indexbi.bin`
