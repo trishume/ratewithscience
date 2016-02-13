@@ -20,18 +20,31 @@ struct Path {
 class Graph {
   Database db;
   uint[] g;
+  uint pageHeaderSize;
+  uint firstPageIndex;
+
+  enum fileVersionIndex = 0;
+  enum fileHeaderSizeIndex = 2;
+  enum filePageHeaderSizeIndex = 3;
 
   enum pageUserDataField = 0;
   enum pageLinksField = 1;
   enum pageBidLinksField = 2;
-  enum pageHeaderSize = 4;
-  enum firstPageIndex = 4;
 
   this(string dataFolder) {
     db = Database(buildPath(dataFolder, "xindex-nocase.db"));
     writeln("Loading binary graph...");
     g = cast(Page[])read(buildPath(dataFolder, "indexbi.bin"));
     writefln("Loaded %d ints", g.length);
+
+    if(g[fileVersionIndex] > 1) {
+      pageHeaderSize = g[filePageHeaderSizeIndex] / 4;
+      firstPageIndex = g[fileHeaderSizeIndex] / 4;
+    } else {
+      pageHeaderSize = 3;
+      firstPageIndex = 4;
+    }
+    writefln("File version: %d, File header %d, Page header %d", g[fileVersionIndex], pageHeaderSize, firstPageIndex);
   }
 
   Page titleToPage(const(char[]) title) {
@@ -65,11 +78,12 @@ class Graph {
     struct AllPageRange {
       uint[] g;
       uint i;
+      uint pageHeaderSize;
       bool empty() { return i >= g.length; }
       Page front() { return i*4; }
       void popFront() { i += pageHeaderSize+g[i+pageLinksField]; }
     }
-    return AllPageRange(g, firstPageIndex);
+    return AllPageRange(g, firstPageIndex, pageHeaderSize);
   }
 
   void clearMarks() {

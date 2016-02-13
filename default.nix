@@ -9,10 +9,8 @@ pkgs.stdenv.mkDerivation rec {
   #  mkdir -p $out
   #'';
   shellHook = ''
-    find ${vibed}/source -name '*.d' -exec ${dmd}/bin/dmd -ofratewithscience -version=VibeNoSSL -version=VibeLibeventDriver -version=VibeDefaultMain -L-L${sqlite}/lib -L-L${pkgs.libevent}/lib -L-lsqlite3 -L-levent -L-levent_pthreads -I${dmdpath} source/*.d ${d2sqlite3}/source/*.d ${gfm}/core/gfm/core/queue.d {} +
+    find ${vibed}/source -name '*.d' -exec ${dmd}/bin/dmd -O -ofratewithscience -version=VibeNoSSL -version=VibeLibeventDriver -version=VibeDefaultMain -L-L${sqlite}/lib -L-L${pkgs.libevent}/lib -L-lsqlite3 -L-levent -L-levent_pthreads -I${dmdpath} source/*.d ${d2sqlite3}/source/*.d ${gfm}/core/gfm/core/queue.d {} +
   '';
-
-  libPath = with pkgs; stdenv.lib.makeLibraryPath [ sqlite libevent dmd ];
 
   dmd = pkgs.dmd;
   sqlite = pkgs.sqlite;
