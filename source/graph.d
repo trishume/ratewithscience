@@ -32,8 +32,12 @@ class Graph {
   enum pageBidLinksField = 2;
 
   this(string dataFolder) {
-    db = Database(buildPath(dataFolder, "xindex-nocase.db"));
-    writeln("Loading binary graph...");
+    string dbPath = buildPath(dataFolder, "xindex-nocase.db");
+    if(!exists(dbPath)) {
+      dbPath = buildPath(dataFolder, "xindex.db");
+    }
+    db = Database(dbPath);
+    writeln("Loaded ", dbPath, ". Loading binary graph...");
     g = cast(Page[])read(buildPath(dataFolder, "indexbi.bin"));
     writefln("Loaded %d ints", g.length);
 

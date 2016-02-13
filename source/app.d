@@ -26,6 +26,7 @@ class ApiImpl : Api {
 }
 
 shared static this() {
+  writeln("Starting Rate With Science!");
   wikiGraph = new Graph("data");
   mtx = new TaskMutex;
 
