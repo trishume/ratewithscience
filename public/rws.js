@@ -73,6 +73,7 @@ Array.prototype.forEach.call(document.querySelectorAll("input[type='text']"), fu
                 }
             }
         } );
+        ga('send', 'event', 'Ratings', 'search');
     }, 200));
 
     element.addEventListener("keydown", function(event) {
