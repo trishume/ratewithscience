@@ -73,7 +73,6 @@ Array.prototype.forEach.call(document.querySelectorAll("input[type='text']"), fu
                 }
             }
         } );
-        ga('send', 'event', 'Ratings', 'search');
     }, 200));
 
     element.addEventListener("keydown", function(event) {
@@ -144,6 +143,9 @@ document.getElementById("go").addEventListener("click", function() {
                 show(document.getElementById("error"));
             }
         });
+        if(window.ga) {
+            window.ga('send', 'event', 'Ratings', 'search');
+        }
     }, 500);
 });
 
