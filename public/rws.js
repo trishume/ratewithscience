@@ -99,14 +99,17 @@ document.getElementById("go").addEventListener("click", function() {
     hide(document.getElementById("header"));
     show(document.getElementById("loading"));
     setTimeout(function() {
+        var data = {
+            start: ($("#start").val()==""?"David Hasselhoff":$("#start").val()),
+            stop: ($("#end").val()==""?"Eiffel Tower":$("#end").val())
+        };
+        /* save the endpoints in the url */
+        window.location.hash = $.param(data);
         $.ajax({
             url: "/api/findscale",
             //url: "data.txt",
             type: "GET",
-            data: {
-              start: ($("#start").val()==""?"David Hasselhoff":$("#start").val()),
-              stop: ($("#end").val()==""?"Eiffel Tower":$("#end").val())
-            },
+            data: data,
             dataType: "json",
             success: function(result) {
                 if (result.status > 2) { // success
@@ -158,3 +161,26 @@ document.getElementById("close_error").addEventListener("click", function() {
     hide(document.getElementById("error"));
     show(document.getElementById("header"));
 });
+
+/* https://gist.github.com/varemenos/2531765 */
+function getUrlVar(key){
+    var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.hash);
+    return result && decodeURI(result[1].replace(/\+/g, ' ')) || "";
+}
+
+(function() {
+    /* pull parameters from url */
+    var start = getUrlVar("start");
+    var stop = getUrlVar("stop");
+
+    document.getElementById("start").value = start;
+    document.getElementById("end").value = stop;
+
+    /* if both are there then click the Go button */
+    if (start !== "" && stop !== "") {
+        /* wait a second to give a chance to peek at the endpoints */
+        setTimeout(function() {
+            document.getElementById("go").click();
+        }, 1000)
+    }
+})();
