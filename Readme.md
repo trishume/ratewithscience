@@ -63,3 +63,7 @@ Steps:
 [Jester]: https://github.com/dom96/jester
 [Vibe.d]: https://vibed.org/
 [d2sqlite3]: https://github.com/biozic/d2sqlite3
+
+## License
+
+This code is released under the MIT license.
