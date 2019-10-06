@@ -89,7 +89,6 @@ impl Graph {
         stop: PageByteOffset,
         mode: SearchMode,
     ) -> Option<Vec<PageByteOffset>> {
-        println!("{} {} - {} {}", start, stop, self.page_count, self.page_header_size);
         let len_field = match mode {
             SearchMode::Unidirectional => PAGE_LINKS_FIELD,
             SearchMode::Bidirectional => PAGE_BID_LINKS_FIELD,

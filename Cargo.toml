@@ -7,3 +7,6 @@ edition = "2018"
 [dependencies]
 byteorder = "1.3.2"
 rusqlite = "0.20.0"
+rouille = { version = "3.0.0", default-features = false }
+serde = "1.0.101"
+serde_derive = "1.0.101"

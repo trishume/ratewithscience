@@ -19,7 +19,7 @@ pub enum PathStatus {
     Unidirectional,
 }
 
-struct IndexedGraph {
+pub struct IndexedGraph {
     graph: Graph,
     index: Index,
 }
@@ -45,7 +45,8 @@ impl IndexedGraph {
             Some((SearchMode::Unidirectional, path)) => (PathStatus::Unidirectional, path),
             None => (PathStatus::NoPath, vec![]),
         };
-        let path: Result<Option<Vec<String>>> = path_offsets.into_iter()
+        let path: Result<Option<Vec<String>>> = path_offsets
+            .into_iter()
             .map(|offset| self.index.page_to_title(offset))
             .collect();
         let path = path?.unwrap();
@@ -60,7 +61,9 @@ mod tests {
     #[test]
     fn test_graph() {
         let g = IndexedGraph::new(Path::new("data")).unwrap();
-        let (status, path) = g.rate_with_science("David Hasselhoff", "Eiffel Tower").unwrap();
+        let (status, path) = g
+            .rate_with_science("David Hasselhoff", "Eiffel Tower")
+            .unwrap();
         assert_eq!(status, PathStatus::Bidirectional);
         assert_eq!(&path[1], "EuroTrip");
     }
