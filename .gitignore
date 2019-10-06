@@ -6,3 +6,11 @@ __dummy.html
 *.obj
 ratewithscience
 __test__library__
+
+
+#Added by cargo
+#
+#already existing elements are commented out
+
+/target
+**/*.rs.bk
