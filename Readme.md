@@ -21,18 +21,12 @@ Dave's JS sends my backend two endpoints via AJAX and my backend gives back a li
 ## The Current Tech
 
 The frontend is written in static HTML and JS with CSS3 animations and properties for extra fancy design.
-The backend is currently written in [D](http://dlang.org/), which is the third compiled language I (Tristan) have written the same thing in.
-Now I have a nice comparison corpus of having implemented the exact same app in Rust, Nim and D. It is a great way to try out a language.
+The backend is currently written in Rust, on its fourth rewrite. Previously I had written it in D, Nim and Rust (when I was first learning) for fun. However the D codebase kept breaking and it was hard to deploy on my VPS, so I rewrote it in Rust so I could hopefully keep it running more easily.
 
-The D backend uses the [Vibe.d][] web framework to serve Dave's frontend as well
-as respond to API calls for path finding. It was a mostly straightforward translation of the Nim version, but a bit nicer.
-
-First the backend translates the given pages into something usable with the binary graph using the [wikicrush][] `xindex.db` file with Nim's standard Sqlite library.
+First the backend translates the given pages into something usable with the binary graph using the [wikicrush][] `xindex.db` sqlite file.
 The backend then performs a breadth-first-search on an in-memory buffer of the [wikicrush][] `indexbi.bin` file.
 It first tries to BFS through only bidirectional links as these lead to better paths but if that fails it tries a single-direction search.
 Then it uses the Sqlite database to translate the path offsets it got back into article names and ships them back to the frontend as JSON.
-
-The JSON API is generated using [Vibe.d's fancy REST generator][https://vibed.org/api/vibe.web.rest/].
 
 ## The Nim Tech
 
